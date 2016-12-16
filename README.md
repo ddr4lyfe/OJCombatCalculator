@@ -1,1 +1,1 @@
-"# OJCombatCalculator" 
+# OJCombatCalculator
