@@ -8,7 +8,7 @@
   	<meta name="description" content="The HTML5 Herald">
   	<meta name="author" content="SitePoint">
 
-  	<link rel="stylesheet" href="css/styles.css?v=1.0">
+  	<!--<link rel="stylesheet" href="css/styles.css?v=1.0">-->
 
   	<!--[if lt IE 9]>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -28,20 +28,62 @@
 	<h1>100% Orange Juice Combat Calculator</h1>
 	<p>This calculator will show you your chances of survival and your best option, 
 		given the opponent's dice roll, your stat bonuses, and your HP.</p>
-	<p>Opponent Roll: <input type="text" size="1" class="textbox" id="opponent-roll"/> <span id="opponent-roll-error" style="color:red;"></span></p>
-	<p>Defense Buff: <input type="text" size="1" class="textbox" id="defense-buff"/> <span id="defense-buff-error" style="color:red;"></span></p>
-	<p>Evade Buff: <input type="text" size="1" class="textbox" id="evade-buff"/> <span id="evade-buff-error" style="color:red;"></span></p>
+	<p>Your HP: <input type="text" size="1" class="positive-textbox" id="player-hp" value="1"/> <span id="player-hp-error" style="color:red;"></span></p>
+	<p>Opponent Roll: <input type="text" size="1" class="positive-textbox" id="opponent-roll" value="1"/> <span id="opponent-roll-error" style="color:red;"></span></p>
+	<p>Defense Buff: <input type="text" size="1" class="textbox" id="defense-buff" value="0"/> <span id="defense-buff-error" style="color:red;"></span></p>
+	<p>Evade Buff: <input type="text" size="1" class="textbox" id="evade-buff" value="0"/> <span id="evade-buff-error" style="color:red;"></span></p>
+	<input type="button" value="Calculate" id="calculate"/>
+	<div id="calc-info" style="display: none;">
+		<p>If you choose Defend:<br>
+		Expected Damage: <span id="defend-expected-damage"></span><br/>
+		Chance of survival: <span id="defend-chance-of-survival"></span></p>
+		<p>If you choose Evade:<br>
+		Expected Damage: <span id="evade-expected-damage"></span><br/>
+		Chance of survival: <span id="evade-chance-of-survival"></span></p>
+	</div>
+
 	
 	
 	
 	<script>
+		let inputerror = false;
 		$(".textbox")
-			.focusout(function() {
-				if (Math.floor(this.value) == this.value && ($.isNumeric(this.value) || this.value == "")) {
+			.keyup(function() {
+				if (Math.floor(this.value) == this.value && ($.isNumeric(this.value) && this.value !== "")) {
 					$("#" + this.id + "-error").text("");
+					$("#calculate").prop('disabled', false);
 				} else {
 					$("#" + this.id + "-error").text("Please insert only integers");
+					$("#calculate").prop('disabled', true);
+					$("#calc-info").hide();
 				}
+			});
+
+		$(".positive-textbox")
+			.keyup(function() {
+				if (Math.floor(this.value) == this.value && ($.isNumeric(this.value) && this.value > 0 && this.value !== "")) {
+					$("#" + this.id + "-error").text("");
+					$("#calculate").prop('disabled', false);
+				} else {
+					$("#" + this.id + "-error").text("Please insert only positive integers");
+					$("#calculate").prop('disabled', true);
+					$("#calc-info").hide();
+				}
+			});
+
+		$("#calculate")
+			.click(function() {
+				//console.log("#calculate clicked");
+
+				let defExpDmg = 0,
+					defLiveChnc = 0,
+					evdExpDmg = 0,
+					evdLiveChnc = 0;
+
+
+
+				$("#calc-info").show();
+
 			});
 	</script>
 	
