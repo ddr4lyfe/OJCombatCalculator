@@ -86,8 +86,9 @@
 					atkRoll = $("#atk-roll").val() * 1,
                     defBuff = $("#defense-buff").val() * 1,
                     evdBuff = $("#evade-buff").val() * 1,
-                    maxRoll = $("#number-of-dice").val() * 6,
-                    minRoll = $("#number-of-dice").val() * 1;
+					numDice = $("#number-of-dice").val() * 1,
+                    maxRoll = numDice * 6,
+                    minRoll = numDice * 1;
 
 				console.log(defBuff);
 
@@ -115,9 +116,9 @@
                         console.log("Died to", dmgTaken, "damage");
                     }
                 }
-                defExpDmg /= maxRoll;
+                defExpDmg /= (maxRoll - minRoll);
                 defExpDmg = defExpDmg.toFixed(2);
-                defLiveChnc /= maxRoll / 100;
+                defLiveChnc /= (maxRoll - minRoll + 1) / 100;
                 defLiveChnc = defLiveChnc.toFixed(2);
 
                 //evdExpDmg calculation
@@ -144,14 +145,14 @@
                         console.log("Died to", dmgTaken, "damage");
                     }
                 }
-                evdExpDmg /= maxRoll;
+                evdExpDmg /= (maxRoll - minRoll);
                 evdExpDmg = evdExpDmg.toFixed(2);
-                evdLiveChnc /= maxRoll / 100;
+                evdLiveChnc /= (maxRoll - minRoll + 1) / 100;
                 evdLiveChnc = evdLiveChnc.toFixed(2);
 
                 $("#defend-expected-damage").text(defExpDmg);
-                $("#evade-expected-damage").text(evdExpDmg);
                 $("#defend-chance-of-survival").text(defLiveChnc);
+                $("#evade-expected-damage").text(evdExpDmg);
                 $("#evade-chance-of-survival").text(evdLiveChnc);
 				$("#calc-info").show();
 
